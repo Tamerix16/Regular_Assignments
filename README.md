@@ -1,2 +1,2 @@
-# Regular_Assignments
-All small uni assignments
+# EGB345 Assignment 2
+
