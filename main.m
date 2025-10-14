@@ -5,8 +5,7 @@ Alpha = 3.2737;
 num = [Km];
 den = [1 Alpha 0];
 open_loop = tf(num,den);
-figure;
-t = linspace(0,3.5,100000);
+t = linspace(0,3.5,10000);
 open_loop = step(open_loop,t);
 figure;
 plot(t, open_loop)
@@ -16,11 +15,12 @@ ylabel('Amplitude');
 %% 1.5
 closed_loop = tf([Km],[1 Alpha Km]);
 figure
-step(open_loop,t)
+step(closed_loop,t)
 
 %% 1.6
 KTask1 = 0.824;
 five_pecernt_overshoot = tf([KTask1*Km],[1 Alpha Km*KTask1]);
+figure
 step(five_pecernt_overshoot,t)
 
 %% 2.3
