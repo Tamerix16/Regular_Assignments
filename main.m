@@ -21,11 +21,16 @@ for i = 2:length(t)-1
     y_prev = y(i-1);
     x_cur = x(i);
     y_cur = y(i);
-    f_x = @(x_new)((x_new-2*x_cur+x_prev)/(dt^2)+l0*x_cur/(m*l)+x_cur*k/m);
-    f_y = @(y_new)((y_new-2*y_cur+y_prev)/(dt^2)+k*y_cur/m*(1-l0/l)+g);
+    f_x = @(x_new)((x_new-2*x_cur+x_prev)/(dt.^2)+(l0*x_cur/(m*l))+x_cur*k/m);
+    f_y = @(y_new)((y_new-2*y_cur+y_prev)/(dt.^2)+(k*y_cur/m)*((1-l0)/l)+g);
     x_new = fzero(f_x,x_cur);
     y_new = fzero(f_y, y_cur);
     x(i+1) = x_new;
     y(i+1) = y_new;
 end
+figure
+plot(t,y)
+figure
+plot(t,x)
+figure
 plot(x,y);
