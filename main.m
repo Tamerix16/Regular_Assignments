@@ -1,28 +1,29 @@
+clear all;
 m = 0.1; %kg
 theta_0 = 0.05; %rad
 theta_0_dot = 0.01; %rad/s
 l0 = 20; %meters
 r0 = 22; %meters
 r0_dot = 0.1; % m/s
+
 k = 20; %N/m
 g = 9.8; %m/s2
-x(1) = 1.1;
-y(1) = -22;
-x_dot0 = 1.15;
-y_dot0 = 0.155;
-dt = 0.0001;
+x(1) = 22*sin(0.05);
+y(1) = 22*cos(0.05);
+x_dot0 = r0_dot*sin(theta_0) - r0*theta_0_dot*cos(theta_0);
+y_dot0 = r0_dot*cos(theta_0) + r0*theta_0_dot*sin(theta_0);
+dt = 0.1;
 y(2) = y(1)+y_dot0*dt;
 x(2) = x(1)+x_dot0*dt;
 t = 0:dt:10;
 for i = 2:length(t)-1
-    current = i;
     l = sqrt(x(i).^2+y(i).^2);
     x_prev = x(i-1);
     y_prev = y(i-1);
     x_cur = x(i);
     y_cur = y(i);
-    f_x = @(x_new)((x_new-2*x_cur+x_prev)/(dt.^2)+(l0*x_cur/(m*l))+x_cur*k/m);
-    f_y = @(y_new)((y_new-2*y_cur+y_prev)/(dt.^2)+(k*y_cur/m)*((1-l0)/l)+g);
+    f_x = @(x_new)(m*((x_new-(2*x_cur)+x_prev) / (dt^2)) + k*(sqrt(x_cur^2+y_cur^2)-l0)*(x_cur/(sqrt(x_cur^2+y_cur^2))));
+    f_y = @(y_new)(m*((y_new-(2*y_cur)+y_prev) / (dt^2)) + k*(sqrt(x_cur^2+y_cur^2)-l0)*(y_cur/(sqrt(x_cur^2+y_cur^2)))-m*g);
     x_new = fzero(f_x,x_cur);
     y_new = fzero(f_y, y_cur);
     x(i+1) = x_new;
