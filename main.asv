@@ -38,30 +38,12 @@ figure
 plot(x,y);
 set(gca, 'YDir', 'reverse')
 %% convergence study
-converged = false;
-while(converged == false)
+while(converged == true)
     end_position = sqrt(x(end)^2+y(end)^2);
     end_position_1 = sqrt(x(end-1)^2 +y(end-1)^2);
     if (abs(end_position-end_position_1)>0.005)
-    dt = dt./2;
-    t = 0:dt:10;
-for i = 2:length(t)-1
-    l = sqrt(x(i).^2+y(i).^2);
-    x_prev = x(i-1);
-    y_prev = y(i-1);
-    x_cur = x(i);
-    y_cur = y(i);
-    f_x = @(x_new)(m*((x_new-(2*x_cur)+x_prev) / (dt^2)) + k*(sqrt(x_cur^2+y_cur^2)-l0)*(x_cur/(sqrt(x_cur^2+y_cur^2))));
-    f_y = @(y_new)(m*((y_new-(2*y_cur)+y_prev) / (dt^2)) + k*(sqrt(x_cur^2+y_cur^2)-l0)*(y_cur/(sqrt(x_cur^2+y_cur^2)))-m*g);
-    x_new = fzero(f_x,x_cur);
-    y_new = fzero(f_y, y_cur);
-    x(i+1) = x_new;
-    y(i+1) = y_new;
-end
+    dt = dt/2;
     else
-    converged = true;
+
     end
 end
-figure
-plot(x,y)
-set(gca, 'YDir', 'reverse')
