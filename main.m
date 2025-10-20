@@ -65,3 +65,16 @@ end
 figure
 plot(x,y)
 set(gca, 'YDir', 'reverse')
+%% task 7
+dt = 0.03;
+f_theta = @(t)(0.052.*cos(0.7.*t-0.28));
+f_r = @(t)(1.95.*cos(14.14.*t-0.0036)+20.05);
+t = 0:dt:10;
+x_test = f_r(t).*sin(f_theta(t));
+y_test = f_r(t).*cos(f_theta(t));
+plot(x_test,y_test)
+set(gca, 'YDir', 'reverse')
+figure
+plot(t,x_test)
+figure
+plot(t,y_test)
