@@ -49,3 +49,7 @@ k = 0.822;
 testing = tf([k*Km],[1 Alpha k*Km]);
 figure
 step(testing)
+
+%% task 4.2
+backup = feedback(tf([3.27717*Km],[1 6.54 0]),1)
+step(backup)
