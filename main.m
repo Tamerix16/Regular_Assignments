@@ -34,3 +34,13 @@ step(K_10,t)
 step(K_04,t)
 hold off
 legend ('1.6','1','0.4');
+%%
+K = 0.686919;
+testing = tf([10*Alpha*Km*K],[1 Alpha+10*Alpha 10*Alpha^2 K*10*Alpha*Km]);
+figure
+step(testing)
+%%
+K = 0.496633;
+testing = tf([2*Alpha*Km*K],[1 Alpha+2*Alpha 2*Alpha^2 K*2*Alpha*Km]);
+figure
+step(testing)
