@@ -44,3 +44,8 @@ K = 0.496633;
 testing = tf([2*Alpha*Km*K],[1 Alpha+2*Alpha 2*Alpha^2 K*2*Alpha*Km]);
 figure
 step(testing)
+%%
+k = 0.822;
+testing = tf([k*Km],[1 Alpha k*Km]);
+figure
+step(testing)
