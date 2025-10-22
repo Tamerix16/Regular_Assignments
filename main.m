@@ -16,24 +16,30 @@ ylabel('Amplitude');
 closed_loop = tf([Km],[1 Alpha Km]);
 figure
 step(closed_loop,t)
+title('Closed Loop Step Response (K = 1)')
+xlabel('Time (s)')
+ylabel('Amplitude')
 
 %% 1.6
 KTask1 = 0.824;
 five_pecernt_overshoot = tf([KTask1*Km],[1 Alpha Km*KTask1]);
 figure
 step(five_pecernt_overshoot,t)
-
+title('Closed Loop Step Response (5%Overshoot)')
+xlabel('Time (s)')
+ylabel('Amplitude')
 %% 2.3
 K_16 = tf([1.6*KTask1*Km], [1 Alpha 1.6*KTask1*Km]);
 K_10= tf([KTask1*Km], [1 Alpha KTask1*Km]);
-K_04 = tf([0.4*KTask1*Km], [1 Alpha 0.4*KTask1*Km]);
+K_02 = tf([0.2*KTask1*Km], [1 Alpha 0.2*KTask1*Km]);
 figure
 hold on
 step(K_16,t)
 step(K_10,t)
-step(K_04,t)
+step(K_02,t)
 hold off
-legend ('1.6','1','0.4');
+legend ('1.6','1','0.2');
+title('Step Resopons (Varying K)')
 %%
 Kfo = 0.686919;
 Gfo = tf([10*Alpha*Km*Kfo],[1 Alpha+10*Alpha 10*Alpha^2 Kfo*10*Alpha*Km]);
