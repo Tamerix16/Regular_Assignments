@@ -45,14 +45,38 @@ Kfo = 0.686919;
 Gfo = tf([10*Alpha*Km*Kfo],[1 Alpha+10*Alpha 10*Alpha^2 Kfo*10*Alpha*Km]);
 figure
 step(Gfo)
+title('Step Response Extra Fast Pole With K = 0.686919')
+xtitle('Time (s)')
+ytitle('Amplitude')
 %%
 Kso = 0.496633;
 Gso = tf([2*Alpha*Km*Kso],[1 Alpha+2*Alpha 2*Alpha^2 Kso*2*Alpha*Km]);
 figure
 step(Gso)
-
+title('Step Response Extra Slow Pole With K = 0.496633')
+xtitle('Time (s)')
+ytitle('Amplitude')
+%% task 3.5
+GO_fast = tf([Kfo*Km],[1 Alpha Km*Kfo]);
+GO_Slow = tf([Kso*Km],[1 Alpha Km*Kso]);
+Gfo_original = tf([10*Alpha*Km*KTask1],[1 Alpha+10*Alpha 10*Alpha^2 KTask1*10*Alpha*Km]);
+Gfo_slow = tf([10*Alpha*Km*Kso],[1 Alpha+10*Alpha 10*Alpha^2 Kso*10*Alpha*Km]);
+Gso_fast = tf([2*Alpha*Km*Kfo],[1 Alpha+2*Alpha 2*Alpha^2 Kfo*2*Alpha*Km]);
+Gso_Original = tf([2*Alpha*Km*KTask1],[1 Alpha+2*Alpha 2*Alpha^2 KTask1*2*Alpha*Km]);
+figure
+step(GO_fast);
+figure
+step(Gso_fast);
+figure
+step(Gfo_slow);
+figure
+step(GO_Slow);
+figure
+step(Gso_Original);
+figure
+step(Gfo_original);
 %% task 4.2
 Klead = 3.27717;
 Glead = feedback(tf([Klead*Km],[1 6.54 0]),1);
 figure
-step(Glead)
+step(Glead,t)
