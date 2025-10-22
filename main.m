@@ -35,21 +35,18 @@ step(K_04,t)
 hold off
 legend ('1.6','1','0.4');
 %%
-K = 0.686919;
-testing = tf([10*Alpha*Km*K],[1 Alpha+10*Alpha 10*Alpha^2 K*10*Alpha*Km]);
+Kfo = 0.686919;
+Gfo = tf([10*Alpha*Km*Kfo],[1 Alpha+10*Alpha 10*Alpha^2 Kfo*10*Alpha*Km]);
 figure
-step(testing)
+step(Gfo)
 %%
-K = 0.496633;
-testing = tf([2*Alpha*Km*K],[1 Alpha+2*Alpha 2*Alpha^2 K*2*Alpha*Km]);
+Kso = 0.496633;
+Gso = tf([2*Alpha*Km*Kso],[1 Alpha+2*Alpha 2*Alpha^2 Kso*2*Alpha*Km]);
 figure
-step(testing)
-%%
-k = 0.822;
-testing = tf([k*Km],[1 Alpha k*Km]);
-figure
-step(testing)
+step(Gso)
 
 %% task 4.2
-backup = feedback(tf([3.27717*Km],[1 6.54 0]),1)
-step(backup)
+Klead = 3.27717;
+Glead = feedback(tf([Klead*Km],[1 6.54 0]),1);
+figure
+step(Glead)
