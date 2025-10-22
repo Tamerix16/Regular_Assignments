@@ -65,16 +65,34 @@ Gso_fast = tf([2*Alpha*Km*Kfo],[1 Alpha+2*Alpha 2*Alpha^2 Kfo*2*Alpha*Km]);
 Gso_Original = tf([2*Alpha*Km*KTask1],[1 Alpha+2*Alpha 2*Alpha^2 KTask1*2*Alpha*Km]);
 figure
 step(GO_fast);
+title('Original System Step Response With Kfo Gain')
+xlabel("Time")
+ylabel('Amplitude')
 figure
 step(Gso_fast);
+title('Slow System Step Response With Kfo Gain')
+xlabel('Time (s)')
+ylabel('Amplitude')
 figure
 step(Gfo_slow);
+title('Fast System Step Response With Kso Gain')
+xlabel('Time (s)')
+ylabel('Amplitude')
 figure
 step(GO_Slow);
+title('Original System Step Response With Kso Gain')
+xlabel('Time (s)')
+ylabel('Amplitude')
 figure
 step(Gso_Original);
+title('Slow System Step Response With Original Gain')
+xlabel('Time (s)')
+ylabel('Amplitude')
 figure
 step(Gfo_original);
+title('Fast System Step Response With Original Gain')
+xlabel('Time (s)')
+ylabel('Amplitude')
 %% task 4.2
 Klead = 3.27717;
 Glead = feedback(tf([Klead*Km],[1 6.54 0]),1);
