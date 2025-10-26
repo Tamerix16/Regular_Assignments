@@ -1,2 +1,2 @@
-# EGB211 Computer Lab
+# EGB345 Assignment 2
 
