@@ -1,2 +1,1 @@
-# EGB345 Assignment 2
-
+# Used to test Latex code
