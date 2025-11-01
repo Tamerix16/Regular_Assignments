@@ -1,0 +1,69 @@
+% chktex-file 44
+\documentclass{article}
+\usepackage[style=authoryear, backend=biber]{biblatex}
+\usepackage[margin=2.54cm]{geometry}
+\usepackage{parskip}
+\hyphenpenalty=1000000
+\setlength{\parskip}{\baselineskip}
+\addbibresource{ref.bib}
+\setlength{\parindent}{0pt}
+\renewcommand{\contentsname}{Table Of Contents}
+\title{EGB320 Final Report: Mobility Subsystem}
+\author{Darcy Stewart
+\\N11977965
+\\ Group 3}
+\begin{document}
+
+\maketitle
+\pagebreak
+\newgeometry{left=5cm, right = 5cm}
+\begin{center}
+   \tableofcontents 
+\end{center}
+\pagebreak
+\restoregeometry{}
+\section{Problem Description}
+The problem set forward by the client was that shelves needed restocking, and it was believed that a robotic system would provide a more cost-effective method for shelf
+restocking. To evaluate the suitability of a robotic warehousing system a Technology Readiness Level 3(TRL3) prototype. This prototype was designed to work in a scaled
+down mock warehouse with shelves, items and obstacles that would simulate the major factors around navigating and moving stock around a grocery store.
+\par
+For this prototype some adjustments were made to allow for more streamlined development. The first major adjustment was to have each different element in the store be
+represented by an object of a different color and shape as shown below:
+\par
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ Element & Representation \\ 
+ \hline
+ Obstacle & Green Colouring \\ 
+ Item & Orange Colouring\\ 
+ Aisle and Picking Station Marker & Black Colouring\\
+ Shelves & Blue Colouring\\
+ Picking Station & Yellow Colouring\\
+ \hline
+\end{tabular}
+\end{center}
+These adjustments were made to allow for a more simplified vision system which in turn would allow for rapid development. Further prototypes will build on this model to
+allow for more complex vision processing. Along with this the shelf heights were the same for all aisles. Allowing for simplified item placement and navigation code as
+no matter the bay the heights will always remain the same. The final simplification is the distance between the picking stations, this distance allows for a lower level
+accuracy being required to pick up an item.
+\par
+With these simplifications in mind 4 separate subsystems were identified that would be designed to integrate to a final product. The intention behind this was to further
+simplify the system through having each system capable of operating separately with methods of communication to allow for integration. This allowed for the 4 subsystems
+to be designed in parallel and setbacks in one element of the robot would not necessarily set back the overall progress of the robot.
+\par
+Following this the requirements for each subsystem were identified, for mobility these requirements were as follows:
+\begin{itemize}
+    \item Turn to a bearing on a single point in a given direction
+    \item Turn at a set speed in a given direction
+    \item Move forward and backward at a set speed
+    \item Move forward and backward a set distance
+    \item Have a chassis that is capable of carrying all other subsystems
+    \item Have a power management system that can power all other subsystems
+\end{itemize}
+With these requirements identified background research was conducted to determine the most suitable solutions.
+
+\pagebreak
+\section{Background Research}
+
+\end{document}
