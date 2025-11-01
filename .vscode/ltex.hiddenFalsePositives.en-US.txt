@@ -1,0 +1,3 @@
+{"rule":"FEWER_LESS","sentence":"^\\QFeature Wheels Tracks Legs Mecanum Wheels Can spin in place Reliably stable without extra sensors Needs 2 motors or less\\E$"}
+{"rule":"FEWER_LESS","sentence":"^\\QFeature Wheels Tracks Legs Mecanum Wheels Can spin in place Reliably stable without extra sensors Needs 2 motors or less Can easily have speed measured in the\\E$"}
+{"rule":"FEWER_LESS","sentence":"^\\QFeature Wheels Tracks Legs Mecanum Wheels Can spin in place Reliably stable without extra sensors Requires 2 motors or less Can easily have speed measured in all directions Easily programmable\\E$"}

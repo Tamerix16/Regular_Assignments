@@ -73,5 +73,44 @@ Research was conducted into various methods for robotic mobility used in similar
     \item Legs
     \item Mecanum Wheels
 \end{itemize}
-With these options identified investigation into the suitability of each method for the proposed application. 
+An investigation into the pros and cons of each system was conducted to allow for a clear evaluation of each option's suitability. The results of this investigation were
+compiled into the table seen below.
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Feature & Wheels & Tracks & Legs & Mecanum Wheels \\
+        \hline
+        Can spin in place & \XSolidBold{} & \Checkmark{} & \Checkmark{} & \Checkmark{}\\
+        Reliably stable without extra sensors & \Checkmark{} &\Checkmark{} &\XSolidBold{} & \Checkmark{}\\
+        Requires 2 motors or less & \Checkmark{} & \Checkmark{} &\XSolidBold{} & \XSolidBold{}\\
+        Can easily have speed measured in all directions & \Checkmark{} & \Checkmark{} & \XSolidBold{} & \XSolidBold{}\\
+        Easily programmable &\Checkmark{} & \Checkmark{} & \XSolidBold{} & \XSolidBold{}\\
+        \hline
+    \end{tabular}
+\end{center}
+As shown in the table above it was decided that tracks would be investigated as the primary option for mobility. This was due to its ability to navigate varying terrain
+with small obstacles, while maintaining a simple drive system to ensure a reliable outcome. The Treads also have a high amount of surface friction due to the large surface
+area in contact with the ground. However, there were concerns about the reliability of tracks as consulting an expert on their usage in the field found that they can be
+prone to slipping off the retainer system over time. This concern was minimal as the environment that the tracks were being deployed in varied greatly from the environment
+of a warehouse.
+\par
+Once the research into the mobility system was done it was crucial to determine a method in which the motors will be controlled. Initially it was thought that the Raspberry Pi utilized for the vision and navigation subsystems would also be used to control the motors. This plan was found to have issues one research found that the
+Raspberry Pi GPIO pins were only capable of 50mA total for the entire pin header. This was a major concern as the motors can easily draw over 5 times this amount under
+a standard load.
+\par
+Further research was conducted and found that the majority of robots that involved a mobility subsystem made use of one or multiple motor controllers. These motor
+controllers take input signals from a central control system and take power directly from the power management system to drive the motors. This bypasses the 50mA current
+limit of the GPIO pins and allows for stronger motors to be used.
+\par
+Once this had been decided the next significant piece of research was to determine a power management system that would be capable of supplying the robot and all of its
+peripherals with power. As the robot's main power supply was an 8.4V Lithium-ion battery it's voltage would need to be regulated down to the required 5V input for the
+Raspberry Pi. Multiple options were considered for this regulator component, the first being a simple 5V linear regulator due to its simplicity for implementation.
+This idea was moved past due to concerns that the with the efficiency of the regulator. Following this research was conducted into the feasibility of a switching regulator.
+Research found that switching regulators are significantly more efficient in their power regulation, however they add high levels of noise to the circuit which can
+affect signals in the system. This however wasn't deemed to be a major issue as there were no components that are highly susceptible to noise. With research conducted
+into all elements required for the mobility system it was then time to begin the actual design and component selection for the robot.
+\pagebreak
+\section{Design}
+
 \end{document}
