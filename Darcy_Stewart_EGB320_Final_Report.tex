@@ -228,5 +228,47 @@ program is show in figure 1.
 \end{figure}
 \subsection{Communication Code For Raspberry Pi}
 The next stage was to develop the code that Raspberry Pi would use to interact with the motor controller. The main purpose of the code was the convert the desired
-distances, speeds and angle of rotation to the necessary values for the communication protocols.
+distances, speeds and angle of rotation to the necessary values for the communication protocols. The breakdown for each mobility function is detailed below:
+\subsubsection{Set Speed}
+The set speed function takes a value of direction and speed. With direction being the characters r and f while speed is measured in m/s. The function takes the desired speed and converts the 
+meters to revolutions before converting the floating point number to a 3 digit value according to the motor controller communication protocol. The motors responsible for 
+moving the robot then have the information sent through according to the communication protocol and the function terminates.
+\subsubsection{Drive distance}
+The drive distance function takes a value of direction and distance measured in mm. The function converts the distance to revolutions and converts it to a 3 digit format used
+by the motor controller communication protocol. This 3 digit format is then input into a string and the command is sent through to the motor controller. Following this
+the function enters a waiting state until it receives the signal that robot has travelled the specified distance.
+\subsubsection{Turn degrees}
+The turn degrees function takes a value of direction in the form of 'l' and 'r' and a distance in degrees. The number of revolutions required to reach these degrees is
+calculated through multiplying it by a constant that was calibrated though testing in the environment. The number of revolutions is then converted to a 3 digit format as
+required by the motor controller. Once the message has been sent the function enters a waiting state until it receives the signal that the robot has travelled to the correct
+angle.
+\subsection{Chassis Design}
+The final part of the design process was ensuring that the chassis required for the mobility system was compatible with the rest of the subsystems. To achieve this it was
+decided that the chassis would be 3d printed to allow for any and all complex geometry to be produced in a cost-effective manner. The design of the overall
+chassis was left mostly in the hands of item collection as the scissor lift design required integration on all elements of the chassis. As such the impact of the mobility
+subsystem was minimal with the only real design influence being the inclusion of 2 lowered sections to raise the robot off the ground to ensure that the bottom didn't collide
+with any aspect of the warehouse (see figure 2).
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.45]{Chassis_Image.PNG}
+    \caption(Figure 2: Mobility contribution to chassis design)
+\end{figure}
+\subsection{Design Validation}
+The mobility system was validated through meeting various targets, these targets included:
+\begin{itemize}
+    \item Be able to move at a speed greater than 0.3m/s
+    \item Be able to move at a constant speed less than 0.05m/s
+    \item Be able to travel up a 20\textdegree{} slope with a total weight of 1kg
+    \item Be able to spin in place to a particular angle
+\end{itemize}
+These system specific goals were tested individually throughout the development of the system quantitatively. In the cases involving straight line speed a speed gate was used
+to get the most accurate ready through the use of laser detectors. In the case of turning on a spot a circle the size of the robot was drawn, and a top-down video was recorded
+to evaluate if the robot left the circle at any point. For the incline test weights were added to the robot until it weighed 1kg and a 2\textdegree{} incline was constructed.
+\par
+The mobility subsystem me all requirements except for the ability to move a t a speed greater than 0.3 m/s. With the requirement for the high torque N20 motors speed had to be
+sacrificed to ensure that the system would perform reliably. Further testing of the integration code was performed alongside navigation development to ensure that all functions
+operated as expected. This also showed success as the robot was capable of accurately traversing the warehouse without any issues related to motor function.
+\par
+\section{Conclusion}
+
 \end{document}
