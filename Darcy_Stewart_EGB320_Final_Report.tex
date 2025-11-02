@@ -4,6 +4,7 @@
 \usepackage[margin=2.54cm]{geometry}
 \usepackage{parskip}
 \usepackage{bbding}
+\usepackage{graphicx}
 \hyphenpenalty=1000000
 \setlength{\parskip}{\baselineskip}
 \addbibresource{ref.bib}
@@ -181,6 +182,51 @@ and with careful navigation code only 2 motors would be driven at once, thus det
 This new current limitation meant that there was a lot more in terms of options for premade voltage regulators. This lead to the decision to use the DF Robot 25W
 adjustable voltage regulator. The main reason behind the decision to use this voltage regulator was that it not only had an adjustable regulated output, but it also had
 a raw output. This allowed for the motors controlled by the motor driver to be powered directly by the battery and as such could pull however much voltage was required.
+Allowing for only the microcontroller unit of the motor driver to rely on the regulated voltage.
 \par
-
+\subsection{Motor Controller Programming}
+The motor controller was programmed in C++, mainly to utilize the object-oriented nature of the language and highly optimized machine code. The Pimoroni Pico libraries
+had motor objects where all motor values could be saved to the motor info, this was the same for the encoders. Following this a PID controller was calibrated for the
+motors, this had to be done with position and speed PID models separately as the different functions required different models. The calibration process utilized was to
+start with proportional element and increase until there were oscillations and halve the value before moving on to the integral and derivate elements with the same process.
+\par
+Once the PID model had been calibrated for each motor separately the next stage was to set up a method of communication between the Raspberry Pi and Pimoroni Pico.
+This was achieved through using the stdlib.h library that allows for easy setup of serial communication of universal serial bus (USB). Serial communication was chosen
+due to the ease of access to the USB port and the many Python and C++ libraries that allow for easy use. Time had to be spent building a communication protocol that would
+be followed using this. The communication protocol went as follows:
+\begin{center}
+    \begin{tabular}{|c|p{7cm}|p{7cm}|}
+        \hline
+        Character & Velocity Control & Positional Control\\
+        \hline
+        M & Designates that a motor state is going to be changed & Designates that a motor state is going to be changed\\
+        \hline
+        A, B, C, D & Designates which motor is affected & Designates which motor is  affected\\
+        \hline
+        1,0 & 0 sets up for velocity control & 1 sets up positional control\\
+        \hline
+        integer (0→9) & Tells the controller the velocity in value$\times{}$1 rotations per second & Tells the controller the number of rotations to do in value$\times{}$10 rotations\\
+        \hline
+        integer (0→9) &Tells the controller the velocity in value$\times{}$0.1 rotations per second & Tells the controller the number of rotations to do in value$\times{}$1 rotations\\
+        \hline
+        integer (0→9) &Tells the controller the velocity in value$\times{}$0.01 rotations per second & Tells the controller the number of rotations to do in value$\times{}$0.1 rotations\\
+        \hline
+        1,0 & Sets direction & Sets direction\\
+        \hline
+    \end{tabular}
+\end{center}
+This communication protocol was read through detecting an incoming message and saving each character of the message to into a character array that was then interpreted.
+Once the message was read a motor control function was used to interpret the message and execute the desired functions. Once this was completed the program would check
+state of each motor and make adjustments according to the PID system to ensure that all operations are being completed as desired. For positional control if the Robot
+has moved the set distance the motor controller will also send a signal back to Raspberry Pi to allow it to move on in the program. The workflow of the Microcontroller
+program is show in figure 1.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{Microcontroller_Flow_Chart.PNG}
+    \label{Microcontroller Flow Chart}
+    \caption{Figure 1: Microcontroller code flow chart}
+\end{figure}
+\subsection{Communication Code For Raspberry Pi}
+The next stage was to develop the code that Raspberry Pi would use to interact with the motor controller. The main purpose of the code was the convert the desired
+distances, speeds and angle of rotation to the necessary values for the communication protocols.
 \end{document}
