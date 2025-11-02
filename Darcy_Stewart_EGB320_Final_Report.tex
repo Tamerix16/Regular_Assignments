@@ -112,5 +112,35 @@ affect signals in the system. This however wasn't deemed to be a major issue as 
 into all elements required for the mobility system it was then time to begin the actual design and component selection for the robot.
 \pagebreak
 \section{Design}
-
+The design of the subsystem had multiple individual sections that had to be developed sequentially. These sections included, track selection, motor selection,
+motor controller selection, power management system design, motor controller selection and motor controller programming. Each section had their own challenges and 
+needs that had to be evaluated and designed around. Each section and its design considerations are detailed below.
+\par
+\subsection{Track Selection}
+The process of selecting tracks was relatively straightforward as not many of the accessible suppliers that stocked tracks were accessible within a time period that would
+be suitable for the project timeline. This was a major deciding factor, as without a functional mobility system the testing of navigation on the actual robot could not
+commence. With this in mind local Australian based suppliers became the preferable option. With this limiting factor it was found that Robot Gear Australia had the widest
+range of options. These options mainly consisted of Pololu Track sets which came in different size sprockets and track belts.
+\par
+It was decided that the 30 tooth track set was the most suitable, this was mainly due to the sprocket shaft spacing of 85mm. This combined with the sprocket radius of 35mm
+gives a total track length of 120mm, 60\% of the maximum length of 200mm. This length provides stability from rotational forces caused by the robot driving forward and
+reverse with a mass held at a height. With a decision made on the track set to be used the next in the design process was motor selection.
+\par
+\subsection{Motor Selection}
+With the tracks selected some Pololu N20 motors were trialed to drive the system. The main reason behind this was that they were already owned and compatible with the
+track set. These motors were 50:1 N20 DC motors with magnetic encoders and a max output torque of 400gcm. These trial motors were fitted to a baseplate and powered by
+an exiting motor driver hat designed to integrate with the Raspberry Pi. Testing found that while the motors had sufficient power output to drive the Raspberry Pi and
+the mounting baseplate they were unable to move the robot up the necessary inclines with the total predicted system weight. As such output torque in a small format
+became the priority for motor selection.
+\par
+With output torque becoming the priority for motor selection it became necessary to calculate the minimum torque required to achieve the required movements. The torque
+required was calculated using the formula:
+\begin{center}
+\begin{math} 
+    T_m = \mu_s \times m\times g \times radius
+\end{math}
+\end{center} 
+The torque was calculated for the system using an estimated robot mass of 900 grams with a coefficient of friction of 0.45 for carpet. With an applied factor of safety of
+1.2 the estimated torque required was found to be 850gcm. With this value known research was conducted to find an N20 motor that would be capable of producing the required
+levels.
 \end{document}
