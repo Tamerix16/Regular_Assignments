@@ -26,7 +26,7 @@
 \restoregeometry{}
 \section{Problem Description}
 The problem set forward by the client was that shelves needed restocking, and it was believed that a robotic system would provide a more cost-effective method for shelf
-restocking. To evaluate the suitability of a robotic warehousing system a Technology Readiness Level 3(TRL3) prototype. This prototype was designed to work in a scaled
+restocking. To evaluate the suitability of a robotic warehousing system a Technology Readiness Level 3(TRL3) prototype was commissioned. This prototype was designed to work in a scaled
 down mock warehouse with shelves, items and obstacles that would simulate the major factors around navigating and moving stock around a grocery store.
 \par
 For this prototype some adjustments were made to allow for more streamlined development. The first major adjustment was to have each different element in the store be
@@ -52,7 +52,8 @@ accuracy being required to pick up an item.
 \par
 With these simplifications in mind 4 separate subsystems were identified that would be designed to integrate to a final product. The intention behind this was to further
 simplify the system through having each system capable of operating separately with methods of communication to allow for integration. This allowed for the 4 subsystems
-to be designed in parallel and setbacks in one element of the robot would not necessarily set back the overall progress of the robot.
+to be designed in parallel and setbacks in one element of the robot would not necessarily set back the overall progress of the robot. These four subsystems were Vision,
+Navigation, Item Collection and Mobility. This report will focus on the development of the mobility sub system.
 \par
 Following this the requirements for each subsystem were identified, for mobility these requirements were as follows:
 \begin{itemize}
@@ -96,7 +97,8 @@ area in contact with the ground. However, there were concerns about the reliabil
 prone to slipping off the retainer system over time. This concern was minimal as the environment that the tracks were being deployed in varied greatly from the environment
 of a warehouse.
 \par
-Once the research into the mobility system was done it was crucial to determine a method in which the motors will be controlled. Initially it was thought that the Raspberry Pi utilized for the vision and navigation subsystems would also be used to control the motors. This plan was found to have issues one research found that the
+Once the research into the mobility system was done it was crucial to determine a method in which the motors will be controlled. Initially it was thought that the Raspberry 
+Pi utilized for the vision and navigation subsystems would also be used to control the motors. This plan was found to have issues. Research found that the
 Raspberry Pi GPIO pins were only capable of 50mA total for the entire pin header. This was a major concern as the motors can easily draw over 5 times this amount under
 a standard load.
 \par
@@ -107,7 +109,7 @@ limit of the GPIO pins and allows for stronger motors to be used.
 Once this had been decided the next significant piece of research was to determine a power management system that would be capable of supplying the robot and all of its
 peripherals with power. As the robot's main power supply was an 8.4V Lithium-ion battery it's voltage would need to be regulated down to the required 5V input for the
 Raspberry Pi. Multiple options were considered for this regulator component, the first being a simple 5V linear regulator due to its simplicity for implementation.
-This idea was moved past due to concerns that the with the efficiency of the regulator. Following this research was conducted into the feasibility of a switching regulator.
+This idea was moved past due to concerns with the efficiency of the regulator. Following this research was conducted into the feasibility of a switching regulator.
 Research found that switching regulators are significantly more efficient in their power regulation, however they add high levels of noise to the circuit which can
 affect signals in the system. This however wasn't deemed to be a major issue as there were no components that are highly susceptible to noise. With research conducted
 into all elements required for the mobility system it was then time to begin the actual design and component selection for the robot.
@@ -162,7 +164,7 @@ be controlled by the same motor controller. This would minimize the amount of co
 failure points in the system.
 \par
 The number of 4 channel encoder capable motor controllers is very limited. There were many 2 channel options that were investigated as it was believed that there were no
-other options. Eventually two options were found that offered met the 4 channel requirements the M5Stack Encoded Motor Controller and the Pimoroni Pico Motor 2040 motor
+other options. Eventually two options were found that met the 4 channel requirements; the M5Stack Encoded Motor Controller and the Pimoroni Pico Motor 2040 motor
 controller. In terms of electrical functionality the two were equal with each other and the M5Stack sat at a much better price point, however when reviewing the code
 libraries for each it was found that the Pimoroni motor controller had a much better documented library with extensive examples. This was the major deciding factor as
 the better example libraries would allow for quicker and better writing of code to achieve the desired goal. As such it was decided that the Pimoroni Pico Motor 2040
@@ -177,7 +179,7 @@ Regulator and a prototype board was developed.
 This initial prototype board was found to have several issues relating to component placement that resulted in the regulator burning out. At this time it was also advised
 that the battery that was required to safely power the robot had an internal current limiting circuit that limited output to 6A. This resulted in a major reevaluation of
 the design to investigate whether the current design was still suitable. Research found that the Raspberry Pi was capable of running in a low power mode that drew only 3A
-and with careful navigation code only 2 motors would be driven at once, thus determine out current as still being feasible.
+and with careful navigation code only 2 motors would be driven at once, thus determine that the protype would still be feasible with the current output limitations.
 \par
 This new current limitation meant that there was a lot more in terms of options for premade voltage regulators. This lead to the decision to use the DF Robot 25W
 adjustable voltage regulator. The main reason behind the decision to use this voltage regulator was that it not only had an adjustable regulated output, but it also had
@@ -215,10 +217,10 @@ be followed using this. The communication protocol went as follows:
         \hline
     \end{tabular}
 \end{center}
-This communication protocol was read through detecting an incoming message and saving each character of the message to into a character array that was then interpreted.
+This communication protocol was read through detecting an incoming message and saving each character of the message into a character array that was then interpreted.
 Once the message was read a motor control function was used to interpret the message and execute the desired functions. Once this was completed the program would check
 state of each motor and make adjustments according to the PID system to ensure that all operations are being completed as desired. For positional control if the Robot
-has moved the set distance the motor controller will also send a signal back to Raspberry Pi to allow it to move on in the program. The workflow of the Microcontroller
+has moved the set distance the motor controller will also send a signal back to the Raspberry Pi to allow it to move on in the program. The workflow of the Microcontroller
 program is show in figure 1.
 \begin{figure}[h]
     \centering
@@ -227,7 +229,7 @@ program is show in figure 1.
     \caption{Figure 1: Microcontroller code flow chart}
 \end{figure}
 \subsection{Communication Code For Raspberry Pi}
-The next stage was to develop the code that Raspberry Pi would use to interact with the motor controller. The main purpose of the code was the convert the desired
+The next stage was to develop the code that the Raspberry Pi would use to interact with the motor controller. The main purpose of the code was to convert the desired
 distances, speeds and angle of rotation to the necessary values for the communication protocols. The breakdown for each mobility function is detailed below:
 \subsubsection{Set Speed}
 The set speed function takes a value of direction and speed. With direction being the characters r and f while speed is measured in m/s. The function takes the desired speed and converts the 
@@ -236,7 +238,7 @@ moving the robot then have the information sent through according to the communi
 \subsubsection{Drive distance}
 The drive distance function takes a value of direction and distance measured in mm. The function converts the distance to revolutions and converts it to a 3 digit format used
 by the motor controller communication protocol. This 3 digit format is then input into a string and the command is sent through to the motor controller. Following this
-the function enters a waiting state until it receives the signal that robot has travelled the specified distance.
+the function enters a waiting state until it receives the signal that the robot has travelled the specified distance.
 \subsubsection{Turn degrees}
 The turn degrees function takes a value of direction in the form of 'l' and 'r' and a distance in degrees. The number of revolutions required to reach these degrees is
 calculated through multiplying it by a constant that was calibrated though testing in the environment. The number of revolutions is then converted to a 3 digit format as
@@ -251,7 +253,7 @@ with any aspect of the warehouse (see figure 2).
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.45]{Chassis_Image.PNG}
-    \caption(Figure 2: Mobility contribution to chassis design)
+    \caption{Mobility contribution to chassis design}
 \end{figure}
 \subsection{Design Validation}
 The mobility system was validated through meeting various targets, these targets included:
@@ -262,8 +264,8 @@ The mobility system was validated through meeting various targets, these targets
     \item Be able to spin in place to a particular angle
 \end{itemize}
 These system specific goals were tested individually throughout the development of the system quantitatively. In the cases involving straight line speed a speed gate was used
-to get the most accurate ready through the use of laser detectors. In the case of turning on a spot a circle the size of the robot was drawn, and a top-down video was recorded
-to evaluate if the robot left the circle at any point. For the incline test weights were added to the robot until it weighed 1kg and a 2\textdegree{} incline was constructed.
+to get the most accurate reading through the use of laser detectors. In the case of turning on a spot a circle the size of the robot was drawn, and a top-down video was recorded
+to evaluate if the robot left the circle at any point. For the incline test weights were added to the robot until it weighed 1kg and a 20\textdegree{} incline was constructed.
 \par
 The mobility subsystem met all requirements except for the ability to move at a speed greater than 0.3 m/s. With the requirement for the high torque N20 motors speed had to be
 sacrificed to ensure that the system would perform reliably. Further testing of the integration code was performed alongside navigation development to ensure that all functions
@@ -272,7 +274,7 @@ operated as expected. This also showed success as the robot was capable of accur
 \section{Conclusion}
 Overall the mobility subsystem utilizes tracks to produce robot movement, this is due to the reliability of tracks in regard to accurate turning and avoiding wheel slip.
 The tracks are turned by N20 high torque encoded motors that are powered by the Pimoroni Pico Motor 2040 motor controller. The Pimoroni Pico Motor 2040 takes commands over
-a USB that is then interpreted and acted upon according the configured communication protocol. The motor controller then employs the use of the magnetic encoders build into
+a USB that is then interpreted and acted upon according the configured communication protocol. The motor controller then employs the use of the magnetic encoders buit into
 each motor to detect both speed and position, using this data and PID models for each it accurately controls the motors to ensure that the tasks set forth by the navigation
 subsystem are carried out. The main power delivery for the robot is done through a DCDC Buck converter that is run into the Raspberry Pi computer responsible for navigation.
 The motor controller however takes the raw input and uses that as the driving power for motors to ensure that there is no overload on the DCDC Buck converter. Throughout the
