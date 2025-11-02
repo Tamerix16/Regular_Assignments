@@ -3,3 +3,5 @@ Mecanum
 GPIO
 Pololu
 Waveshare
+Pimoroni
+interprate

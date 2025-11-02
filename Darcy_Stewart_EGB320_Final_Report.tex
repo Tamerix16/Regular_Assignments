@@ -143,4 +143,44 @@ required was calculated using the formula:
 The torque was calculated for the system using an estimated robot mass of 900 grams with a coefficient of friction of 0.45 for carpet. With an applied factor of safety of
 1.2 the estimated torque required was found to be 850gcm. With this value known research was conducted to find an N20 motor that would be capable of producing the required
 levels.
+\par
+Other parameters influenced motor selection on top of this. The biggest deciding factor for the motor was the requirement for magnetic encoders to be present or a third
+party option that is compatible. This was determined to be necessary as it is the most common and well documented method for measuring and adjusting motor output speed,
+a feature required for accurate driving. With these requirements local suppliers were searched yielding the Waveshare N20 1:150 encoded motors. The Waveshare motors
+had the same form factor as the trial motors, meaning that a redesign wasn't necessary, and 1.1kgcm of torque, all with an encoder. These motors were also to most
+cost-effective option at \$15 AUD a piece.
+\par
+The selection of the new motors brought an additional complication to the design as they required 1.1A stall current. This was a concern as the pre-existing motor driver
+hat was only capable of outputting 0.5A per motor. As such with the pre-existing motor driver hat the new motors would not be able to be used to their full advantage.
+To address this issue a search for a new motor driver was deemed necessary.
+
+\subsection{Motor Controller Selection}
+The selection for the motor controller had an added level of complexity as it was decided that item collection subsystem would use encoded motors to operate and as such
+would require a motor driver with the same capabilities. To minimize the footprint of the motor controllers that would be needed it was decided that both subsystems should
+be controlled by the same motor controller. This would minimize the amount of connection points between the motor controller and as such limit the amount of potential
+failure points in the system.
+\par
+The number of 4 channel encoder capable motor controllers is very limited. There were many 2 channel options that were investigated as it was believed that there were no
+other options. Eventually two options were found that offered met the 4 channel requirements the M5Stack Encoded Motor Controller and the Pimoroni Pico Motor 2040 motor
+controller. In terms of electrical functionality the two were equal with each other and the M5Stack sat at a much better price point, however when reviewing the code
+libraries for each it was found that the Pimoroni motor controller had a much better documented library with extensive examples. This was the major deciding factor as
+the better example libraries would allow for quicker and better writing of code to achieve the desired goal. As such it was decided that the Pimoroni Pico Motor 2040
+would be the motor driver. With this determined the final part of component selection required was the power management system
+\par
+\subsection{Power Management System Selection}
+The first stage of designing the Power Management system was to estimate the power draw caused by the system. The Raspberry Pi is listed to draw 5A of power at 5V while
+running all the motors in the robot at once would add up to 1.1A a piece. As such the initial power requirement estimate was calculated to be 9.4A of power draw, this
+was rounded up to 12A to give a safe thermal ceiling to ensure that components didn't overheat. The ideal component to handle this was found in the AOZ2295QI-05 DCDC Buck
+Regulator and a prototype board was developed.
+\par
+This initial prototype board was found to have several issues relating to component placement that resulted in the regulator burning out. At this time it was also advised
+that the battery that was required to safely power the robot had an internal current limiting circuit that limited output to 6A. This resulted in a major reevaluation of
+the design to investigate whether the current design was still suitable. Research found that the Raspberry Pi was capable of running in a low power mode that drew only 3A
+and with careful navigation code only 2 motors would be driven at once, thus determine out current as still being feasible.
+\par
+This new current limitation meant that there was a lot more in terms of options for premade voltage regulators. This lead to the decision to use the DF Robot 25W
+adjustable voltage regulator. The main reason behind the decision to use this voltage regulator was that it not only had an adjustable regulated output, but it also had
+a raw output. This allowed for the motors controlled by the motor driver to be powered directly by the battery and as such could pull however much voltage was required.
+\par
+
 \end{document}

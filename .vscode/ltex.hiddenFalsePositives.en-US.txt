@@ -3,3 +3,4 @@
 {"rule":"FEWER_LESS","sentence":"^\\QFeature Wheels Tracks Legs Mecanum Wheels Can spin in place Reliably stable without extra sensors Requires 2 motors or less Can easily have speed measured in all directions Easily programmable\\E$"}
 {"rule":"FEWER_LESS","sentence":"^\\QFeature Wheels Tracks Legs Mecanum Wheels Can spin in place Reliably stable without extra sensors Requires 2 motors or less Can easily have speed measured in all directions Easily programmable As shown in the table above it was decided that tracks would be investigated as the primary option for mobility.\\E$"}
 {"rule":"HAT_THAT","sentence":"^\\QAs such with the pre-existing motor driver hat the new motors would not be able\\E$"}
+{"rule":"HAT_THAT","sentence":"^\\QAs such with the pre-existing motor driver hat the new motors would not be able to be used to their full advantage.\\E$"}
