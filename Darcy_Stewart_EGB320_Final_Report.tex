@@ -270,5 +270,13 @@ sacrificed to ensure that the system would perform reliably. Further testing of 
 operated as expected. This also showed success as the robot was capable of accurately traversing the warehouse without any issues related to motor function.
 \par
 \section{Conclusion}
-
+Overall the mobility subsystem utilizes tracks to produce robot movement, this is due to the reliability of tracks in regard to accurate turning and avoiding wheel slip.
+The tracks are turned by N20 high torque encoded motors that are powered by the Pimoroni Pico Motor 2040 motor controller. The Pimoroni Pico Motor 2040 takes commands over
+a USB that is then interpreted and acted upon according the configured communication protocol. The motor controller then employs the use of the magnetic encoders build into
+each motor to detect both speed and position, using this data and PID models for each it accurately controls the motors to ensure that the tasks set forth by the navigation
+subsystem are carried out. The main power delivery for the robot is done through a DCDC Buck converter that is run into the Raspberry Pi computer responsible for navigation.
+The motor controller however takes the raw input and uses that as the driving power for motors to ensure that there is no overload on the DCDC Buck converter. Throughout the
+development process the mobility subsystem has been constantly validated to ensure that it meets the requirements to complete the tasks expected of it. As such it is deemed
+that the mobility subsystem is capable of driving at a set speed or distance, turning to a specific angle on a point, deliver power to the rest of the robot reliably and
+have a chassis that houses all other subsystems in a way that they are protected.
 \end{document}
