@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_AU","sentence":"^\\QThe data that was gathered by teh Dunmamometere was the processed using the software package DynoLog.\\E$"}

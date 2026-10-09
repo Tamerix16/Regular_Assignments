@@ -1,6 +1,11 @@
 \documentclass[12pt]{article}
 \usepackage[backend=biber, style=ieee]{biblatex}
 \usepackage{parskip}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{changepage}
+\usepackage{amsmath}
 \addbibresource{references.bib}
 \begin{document}
 \author{Darcy Stewart N11977965}
@@ -16,8 +21,131 @@ The Internal Combustion Engine (ICE) have various defined types based around the
 \par
 Differing fuel types have specific methods of ignition suited to them. In the case of engines that use diesel as their fuel source the ignition method implemented is to compress the air in the cylinder of the piston to the point that the temperature of the air is beyond the ignition temperature of the diesel. Following this the fuel is injected and combustion occurs due to the air being above the ignition temperature, consequently expanding the gas and driving the piston \cite{Sun}. This differs from the likes of petrol engines that employ a spark based ignition system.
 \par
-Due to the differences in engines it is often difficult to compare the engines to one another as each cycle has different characteristics. To overcome this hurdle ideal cycles were developed. The purpose of an ideal cycle is to provide a simple processes that is theoretically completely reversible. To achieve this numerous assumptions must be made, consequently making it impossible for the actual measured cycles to match the idealised cycles due to irreversibilities and inefficiencies testing processes. They do however allow for simpler method to study the effects of certain parameters that affect the whole model. The idealised Air Standard Diesel Cycle has 4 processes; isentropic compression, isobaric heat addition, isentropic expansion and constant volume heat rejection that follow that order\cite{Proctor}. This report will employ the use of the idealised model and other key metrics to analyse the performance of a Four-Stroke Diesel engine compared to the theoretical idealised model.
-
-
-
+Due to the differences in engines it is often difficult to compare the engines to one another as each cycle has different characteristics. To overcome this hurdle ideal cycles were developed. The purpose of an ideal cycle is to provide a simple processes that is theoretically completely reversible. To achieve this numerous assumptions must be made, consequently making it impossible for the actual measured cycles to match the idealised cycles due to irreversibilities and inefficiencies testing processes. They do however allow for simpler method to study the effects of certain parameters that affect the whole model. The idealised Air Standard Diesel Cycle has 4 processes; isentropic compression, isobaric heat addition, isentropic expansion and constant volume heat rejection that follow that order\cite{Proctor}. This report will employ the use of the idealised model and other key metrics to analyse the performance of a Four-Stroke Diesel engine at varying loads and rpm conditions.
+\section{Test Engine \& Instrumentation}
+The 404D-22 Perkins Engine is the engine that the data was collected from. It features 4 inline cylinders that operated in a 4 stroke diesel cycle with a bore of 84mm and a stroke length of 100mm. The engine features a compression ratio, the ratio of the maximal to minimal volume of the cylinders throughout the cycle, of 23.3:1. The engine was fitted with a variety of sensors to measure a wide range of parameters to assist in building the model used for performance analysis.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Engine_Diagram.PNG}
+    \label{fig:engine_diag}
+    \caption{Labelled schematic of engine testing apparatus \cite{QUT-Engine}}
+\end{figure}
+The was extensive measuring equipment to gather as much data as possible to allow for an accurate analysis of the system at the various speeds and loads. The dynamometer is one such piece of equipment, it was attached to the output shaft to measure the output power (kW), torque (Nm) and speed (RPM). The data that was gathered by the dynamometer was the processed using the software package DynoLog.
+\par
+While the dynamometer provides significant information about the output capabilities of an engine it is not sufficient to build a model that is usable for a thermodynamic analysis. This is due to the dynamometer only giving information about the outcome of the gas power cycle, to accurately model the engine information of the inputs and outputs of the system is required. To ensure that the sufficient data is collected the control volume schematic of the engine apparatus was developed.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{figures/Control-Volume.PNG}
+    \label{fig:control_volume}
+    \caption{Engine control volume schematic \cite{QUT-Engine}}
+\end{figure}
+With this control volume schematic developed thermocouples and a calorimeter were attached to the test rig to allow for the calculation of the heat energies in the exhaust and coolant. These heat values combined with the coolant flow rate from the flow meter and pressure logged with a U-tube manometer allowed for each of the measurable heat energies to be calculated.
+\par
+To ensure that the conditions under which the data was gathered was as consistent as possible strict processes had to be followed. The most significant procedure that was followed was to allow the engine to sit at each level for a minimum of three minutes to ensure that the system is close to thermal equilibrium. This was important as when the testing apparatus was at a different operating level the thermodynamic conditions differ as the level of heat energy in and consequently the levels of heat energy out will differ. Through allowing the system to sit at an operating level for three minutes allows for there to the system to stabilise around its new operating conditions. Once sufficient time had elapsed and the readings were showing to have minimal changes the data was recorded.
+\pagebreak
+\section{Results}
+The raw collected data required processing to allow for a suitable analysis on the engine's performance and thermodynamic cycle, examples for each property calculated will follow below for the data of the engine at 1400 RPM and 50\% load. The first property calculated was the brake power of the engine, brake power refers to the raw power output of the engine after all losses (e.g. friction, heat loss) \cite{COKER}. Brake power is an important measure of engine performance as the total power output directly scales to the speed and torque that the engine is capable of outputting. The formula for brake horsepower is as shown below:
+\begin{equation}
+\dot{W}_{brake} = \frac{2\pi \times N \times T}{60\times10^3}
+\end{equation}
+Where N is the measured RPM and T is the output torque.
+\begin{equation*}
+    W_{brake} = \frac{2\pi\times 1390\times 63}{60\times 10^3}
+\end{equation*}
+\begin{equation*}
+    W_{brake} = 9.17 kW
+\end{equation*}
+Following this the brake mean effective pressure (BMEP), the average pressure acting on the piston on the power stroke of the cycle \cite{Ibrahim}, was calculated. BMEP is a valuable metric as it shows how effective the engine is at converting the temperature pressure relationship of gas to torque for the rotation of the engine. The formula for BMEP is as follows:
+\begin{equation}
+    BMEP = \frac{W_{brake}\times n_R \times 10^3}{V_D \times (N/60)\times 10^6}
+\end{equation}
+Where $n_R$ is the number of revolutions of the shaft for a full cycle of the engine, in the case of four-stroke engine this is two. $V_D$ is representative of the displacement volume which is calculated through; $V_D = [\frac{\pi \times B^2}{4}\times L]\times n_{cyl}$, with L representing the stroke length, B representing the bore diameter and $n_{cyl}$ is the number of cylinders. Calculating this found that the displacement volume of the 404D-22 Perkins Engine is $2.2 \times 10^{-3} m^3$. With the displacement volume calculated the BMEP for the 1400RPM 50\% load was as follows.
+\begin{equation*}
+    BMEP = \frac{9.17\times 2\times10^3}{2.2\times10^-3\times(1390/60)\times10^6}
+\end{equation*}
+\begin{equation*}
+    BMEP = 0.3571 MPa
+\end{equation*}
+The next key value calculated as the specific fuel consumption (SFC), which is the measure of fuel usage compared to power output \cite{RUSSO}. SFC has a great level of significance in modern engine design as the lower the value of the SFC the less fuel is used to produce the same amount of power. SFC is calculated as follows:
+\begin{equation}
+    SFC = \frac{Fuel Rate\times \rho_{fuel} \times 60\times 1000}{\dot{W_{brake}}}
+\end{equation}
+Where fuel rate is measures in L/min, the density of fuel is $0.86m^3$. For the 1400RPM 50\% load the data would result in the following SFC
+\begin{equation*}
+    SFC = \frac{0.054\times 0.86\times60\times1000}{9.17}
+\end{equation*}
+\begin{equation*}
+    SFC = 303.85 g/KW*h
+\end{equation*}
+The next value required to be calculated was the air fuel ratio (AFR), the AFR is the ration between the amount of air and fuel in a combustion reaction \cite{SPEIGHT}. Air fuel ratio helps to describe the combustion within the engine and the impact of altering the fuel levels of the fuel air mixture on the engine performance. The fuel air ration is calculated using the following:
+\begin{equation}
+    AFR = \frac{\dot{m}_{air}}{\dot{m}_{fuel}}
+\end{equation}
+Where $\dot{m}_{air}$ and $\dot{m}_{fuel}$ represent the respective mass flow rates of the air and fuel measured in kg/s. Prior to finding the air fuel rate the mass flow rate of the air had to be calculated. The mass flow rate of the air was not directly measured, however using the formula $m_{air} = \rho_{air}\times V_{air}$ the mass flow rate of the air can be calculated. To accomplish this with the information provided it must be assumed that the gasses are acting ideally and as such the ideal gas law of $PV = mRT$ can be applied. Using the relationship of $\rho = \frac{m}{V}$ the ideal gas law becomes $\rho = \frac{P}{\frac{R}{M}T}$, where P is the pressure of the environment of 1 atm, R is the universal gas constant of 8.3140, M is the molar mass of air at 0.028964 $kg/mol$, and T is the temperature of the environment of 298.15 K. This give an air density of 1.1839 $kg/m^3$.
+\par
+The next requirement to calculate the mass flow rate of air is to find the average velocity of the air through the motor intake. This can be derived through the equation of $V_{air} = C_O\times A_O \sqrt{2\times \frac{P_2-P_1}{\rho_{air}}}$. With $P_2-P_1 = (\rho_{man}-\rho_{air})g(h_2-h_1)$, where $\rho_{man}$ is the density of the liquid in the U-tube manometer (1000 $kg/m^3$), g = 9.81$m/s^2$ and h2-h1 is the height difference measured by the U-tube manometer (118mm in the case of 1400RPM 50\% load data). This returns a value of $P2-P1 = 2.214\times 10^3$. Substituting this in to the equation above, along with the values of $C_O = 0.6$ for the orifice correction factor and $A_O = 0.0236$ representing the orifice area gives an average velocity of the air to be 0.8647 m/s. Substituting this into the mass flow rate equation gives:
+\begin{equation*}
+\dot{m}_{air} = 1.1839\times0.8647
+\end{equation*}
+\begin{equation*}
+\dot{m}_{air} = 1.5902 kg/s
+\end{equation*}
+The same equation is used to calculate the mass flow rate of fuel with a conversion from L/min to $m^3/s$.
+\begin{equation*}
+    \dot{m}_{fuel} = Fuel Rate\times\frac{60}{1000} \times \rho_{fuel}
+\end{equation*}
+\begin{equation*}
+    \dot{m}_{fuel} = 0.054\times\frac{60}{1000} \times860
+\end{equation*}
+\begin{equation*}
+    \dot{m}_{fuel} = 0.774\times 10^{-3} kg/s
+\end{equation*}
+With these values the AFR can be calculated.
+\begin{equation*}
+    AFR = \frac{0.0222}{0.774\times10^{-3}}
+\end{equation*}
+\begin{equation*}
+    AFR = 28.7
+\end{equation*}
+Following this the volumetric efficiency of the engine was calculated. Volumetric efficiency is the measure of air being moved through the cylinders compared to the theoretical maximum \cite{DENICOLA}. It is an important metric as if an engine is unable to effectively clear it's cylinders then the air available to permit the combustion reaction is extremely low power output reduces as a result. The volumetric efficiency is calculated using the formula below:
+\begin{equation}
+    \eta_{v} = \frac{\dot{m}_{air}}{\rho_{air}\times V_D \times N/(60\times2)}
+\end{equation}
+Where $\dot{m}_{air}$ is the mass flow rate of air in kg/s, $\rho_{air}$ is the density of the air, $V_D$ is the displacement volume of the engine and N is the turn rate of the engine measured in RPM. The calculation of this metric is for the case of 1400 RPM at 50\% load is as shown below:
+\begin{equation*}
+    \eta_{v} = \frac{0.022}{1.1839\times 0.0022 \times 1390/(60\times2)}
+\end{equation*}
+\begin{equation*}
+    \eta_{v} = 0.73
+\end{equation*}
+The second efficiency metric calculated was the brake thermal efficiency of the engine. Brake thermal efficiency measures the power output by the engine to the total power available from the fuel \cite{INDRAWAN}. This metric is of importance as the goal of any engine is to extract as much power out of the fuel source as possible. The formula for calculating brake thermal efficiency is as shown below:
+\begin{equation}
+    \eta_{th} = \frac{\dot{W}_{brake}}{\dot{m}_{fuel}\times Q_{HV}}
+\end{equation}
+Where $Q_{HV}$ is the heating value of diesel at 44MJ/kg. This results in the following value for the case of 1400 RPM at 50\% load.
+\begin{equation*}
+    \eta_{th} = \frac{9.17\times10^3}{7.74\times10^{-4}\times 44\times10^6}
+\end{equation*}
+\begin{equation*}
+    \eta_{th} = 0.2693
+\end{equation*}
+This process was then conducted for all datasets and consolidated into table \ref{Table:Raw_Data}.
+\begin{table}[H]
+\centering
+\begin{adjustwidth}{-3cm}{-3cm}
+\caption{Engine Performance Metrics REDO!!!!!}
+\label{Table:Raw_Data}
+\begin{tabularx}{1.47\textwidth}{|X|X|X|X|X|X|X|X|X|}
+\hline
+Measured Speed (RPM) & Load (\%) & Output Torque (Nm) & Brake Power (kW) & BMEP (MPa) & SFC (g/kW*h) & AFR    & Volumetric Efficiency & Thermal Efficiency  \\ \hline
+1390                 & 50        & 63                 & 9.17             & 0.3571     & 303.85       & 28.67  & 0.73                  & 0.269               \\ \hline
+1392                 & 100       & 123                & 17.93            & 0.69728    & 282.03       & 15.8   & 0.73                  & 0.29                \\ \hline
+1786                 & 50        & 56                 & 10.47            & 0.31746    & 290.67       & 33.3   & 0.7228                & 0.281               \\ \hline
+1788                 & 100       & 118                & 22.09            & 0.66893    & 275.58       & 16.5   & 0.714                 & 0.2969              \\ \hline
+1987                 & 50        & 57                 & 11.86            & 0.3231     & 269.74       & 34.56  & 0.70671               & 0.3033              \\ \hline
+1990                 & 100       & 115                & 23.97            & 0.6519     & 266.99       & 17.28  & 0.7056                & 0.3065              \\ \hline
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+Following this a visual analysis was completed through generating a series of plots relating the measured speed to each metric.
 \end{document}
